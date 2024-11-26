@@ -207,7 +207,7 @@ def knight(i, j, board_color, board, color : str, black=None, white=None):
     else:
         white = board_color
         
-def solve(board):
+def calculate_coverage (board):
     board2 = ['?' * 8 for _ in range(8)]
     white = [list(row) for row in board2]
     black = [list(row) for row in board2]
@@ -304,7 +304,7 @@ def main():
     #     "........",
     # ]
     
-    white, black = solve(chess_board)
+    white, black = calculate_coverage(chess_board)
     print_normal_board(board=chess_board)
     print_normal_board(white, color='White')
     print_normal_board(black, color='Black')
