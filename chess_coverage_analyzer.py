@@ -18,6 +18,11 @@ ALL_FIGURES = BLACK_FIGURES + WHITE_FIGURES
 
 
 def white_pawn(i, j, white, board):
+    """
+    i- = up
+    j+ = right
+    j- = left
+    """
     white[i][j] = board[i][j]
     if i > 0:
         if j > 0 and j < 7:
@@ -35,6 +40,11 @@ def white_pawn(i, j, white, board):
             white[i - 1][j - 1] = board[i - 1][j - 1]
 
 def black_pawn(i, j, black, board):
+    """ 
+    i+ = down
+    j+ = right
+    j- = left
+    """
     black[i][j] = board[i][j]
     if i < 7:
         if j > 0 and j < 7:
@@ -52,9 +62,15 @@ def black_pawn(i, j, black, board):
             black[i + 1][j - 1] = board[i + 1][j - 1]
 
 def king(i, j, board_color, board, color : str, black=None, white=None):
+    """ 
+    i+1 = down
+    i-1 = up
+    j+1 = right
+    j-1 = left
+    """
     board_color[i][j] = board[i][j]
-    if i > 0 and i < 7:
-        if j > 0 and j < 7:
+    if i > 0 and i < 7: # if king is not on the edge of the board
+        if j > 0 and j < 7: # if king is not on the edge of the board
             board_color[i + 1][j] = board[i + 1][j]
             board_color[i + 1][j + 1] = board[i + 1][j + 1]
             board_color[i + 1][j - 1] = board[i + 1][j - 1]
@@ -63,43 +79,43 @@ def king(i, j, board_color, board, color : str, black=None, white=None):
             board_color[i - 1][j] = board[i - 1][j]
             board_color[i - 1][j + 1] = board[i - 1][j + 1]
             board_color[i - 1][j - 1] = board[i - 1][j - 1]
-        if j == 0:
+        if j == 0: # if king is on the left edge of the board
             board_color[i + 1][j] = board[i + 1][j]
             board_color[i + 1][j + 1] = board[i + 1][j + 1]
             board_color[i][j + 1] = board[i][j + 1]
             board_color[i - 1][j] = board[i - 1][j]
             board_color[i - 1][j + 1] = board[i - 1][j + 1]
-        if j == 7:
+        if j == 7: # if king is on the right edge of the board
             board_color[i + 1][j] = board[i + 1][j]
             board_color[i + 1][j - 1] = board[i + 1][j - 1]
             board_color[i][j - 1] = board[i][j - 1]
             board_color[i - 1][j] = board[i - 1][j]
             board_color[i - 1][j - 1] = board[i - 1][j - 1]
-    if i == 0:
-        if j == 0:
+    if i == 0: # if king is on the top edge of the board
+        if j == 0: # if king is on the top left corner of the board
             board_color[i + 1][j] = board[i + 1][j]
             board_color[i + 1][j + 1] = board[i + 1][j + 1]
             board_color[i][j + 1] = board[i][j + 1]
-        if j == 7:
+        if j == 7: # if king is on the top right corner of the board
             board_color[i + 1][j] = board[i + 1][j]
             board_color[i + 1][j - 1] = board[i + 1][j - 1]
             board_color[i][j - 1] = board[i][j - 1]
-        if j > 0 and j < 7:
+        if j > 0 and j < 7: # if king is on the top edge of the board but not on the corners
             board_color[i + 1][j] = board[i + 1][j]
             board_color[i + 1][j + 1] = board[i + 1][j + 1]
             board_color[i + 1][j - 1] = board[i + 1][j - 1]
             board_color[i][j + 1] = board[i][j + 1]
             board_color[i][j - 1] = board[i][j - 1]
-    if i == 7:
-        if j == 0:
+    if i == 7: # if king is on the bottom edge of the board
+        if j == 0: # if king is on the bottom left corner of the board
             board_color[i - 1][j] = board[i - 1][j]
             board_color[i - 1][j + 1] = board[i - 1][j + 1]
             board_color[i][j + 1] = board[i][j + 1]
-        if j == 7:
+        if j == 7: # if king is on the bottom right corner of the board
             board_color[i - 1][j] = board[i - 1][j]
             board_color[i - 1][j - 1] = board[i - 1][j - 1]
             board_color[i][j - 1] = board[i][j - 1]
-        if j > 0 and j < 7:
+        if j > 0 and j < 7: # if king is on the bottom edge of the board but not on the corners
             board_color[i - 1][j] = board[i - 1][j]
             board_color[i - 1][j + 1] = board[i - 1][j + 1]
             board_color[i - 1][j - 1] = board[i - 1][j - 1]
@@ -112,27 +128,33 @@ def king(i, j, board_color, board, color : str, black=None, white=None):
         white = board_color
 
 def rook(i, j, board_color, board, color : str, black=None, white=None):
+    """
+    m+ = down
+    m- = up
+    n+ = right
+    n- = left
+    """
     board_color[i][j] = board[i][j]
     m, n = i,j
-    while n < 7:
+    while n < 7: # while not on the right edge of the board
         board_color[m][n + 1] = board[m][n + 1]
-        if board[m][n + 1] in ALL_FIGURES:
+        if board[m][n + 1] in ALL_FIGURES: # if there is a figure on the way, stop
             break
         n += 1
     m, n = i, j
-    while n > 0:
+    while n > 0: # while not on the left edge of the board
         board_color[m][n - 1] = board[m][n - 1]
         if board[m][n - 1] in ALL_FIGURES:
             break
         n -= 1
     m, n = i, j
-    while m < 7:
+    while m < 7: # while not on the bottom edge of the board
         board_color[m + 1][n] = board[m + 1][n]
         if board[m + 1][n] in ALL_FIGURES:
             break
         m += 1
     m, n = i, j
-    while m > 0:
+    while m > 0: # while not on the top edge of the board
         board_color[m - 1][n] = board[m - 1][n]
         if board[m - 1][n] in ALL_FIGURES:
             break
@@ -144,32 +166,38 @@ def rook(i, j, board_color, board, color : str, black=None, white=None):
         white = board_color
         
 def bishop(i, j, board_color, board, color : str, black=None, white=None):
+    """
+    m+ = down
+    m- = up
+    n+ = right
+    n- = left
+    """
     board_color[i][j] = board[i][j]
     m, n = i, j
-    while m < 7 and n < 7:
+    while m < 7 and n < 7: # while not on the bottom right corner of the board
         board_color[m + 1][n + 1] = board[m + 1][n + 1]
-        if board[m + 1][n + 1] in ALL_FIGURES:
+        if board[m + 1][n + 1] in ALL_FIGURES: # if there is a figure on the way, stop
             break
         m += 1
         n += 1
     m, n = i, j
-    while m < 7 and n > 0:
+    while m < 7 and n > 0: # while not on the bottom left corner of the board
         board_color[m + 1][n - 1] = board[m + 1][n - 1]
         if board[m + 1][n - 1] in ALL_FIGURES:
             break
         m += 1
         n -= 1
     m, n = i, j
-    while m > 0 and n < 7:
+    while m > 0 and n < 7: # while not on the top right corner of the board
         board_color[m - 1][n + 1] = board[m - 1][n + 1]
         if board[m - 1][n + 1] in ALL_FIGURES:
             break
         m -= 1
         n += 1
     m, n = i, j
-    while m > 0 and n > 0:
+    while m > 0 and n > 0: # while not on the top left corner of the board
         board_color[m - 1][n - 1] = board[m - 1][n - 1]
-        if board[m - 1][n - 1] in ALL_FIGURES:
+        if board[m - 1][n - 1] in ALL_FIGURES: 
             break
         m -= 1
         n -= 1
@@ -184,14 +212,20 @@ def queen(i, j, board_color, board, color : str, black=None, white=None):
     bishop(i, j, board_color, board, color, black=black, white=white)
     
 def knight(i, j, board_color, board, color : str, black=None, white=None):
+    """ 
+    i+ = down
+    i- = up
+    j+ = right
+    j- = left 
+    """
     board_color[i][j] = board[i][j]
-    if i > 0 and j > 1:
+    if i > 0 and j > 1: 
         board_color[i - 1][j - 2] = board[i - 1][j - 2]
-    if i > 0 and j < 6:
+    if i > 0 and j < 6: 
         board_color[i - 1][j + 2] = board[i - 1][j + 2]
-    if i > 1 and j > 0:
+    if i > 1 and j > 0: 
         board_color[i - 2][j - 1] = board[i - 2][j - 1]
-    if i > 1 and j < 7:
+    if i > 1 and j < 7: 
         board_color[i - 2][j + 1] = board[i - 2][j + 1]
     if i < 7 and j > 1:
         board_color[i + 1][j - 2] = board[i + 1][j - 2]
@@ -199,7 +233,7 @@ def knight(i, j, board_color, board, color : str, black=None, white=None):
         board_color[i + 1][j + 2] = board[i + 1][j + 2]
     if i < 6 and j > 0:
         board_color[i + 2][j - 1] = board[i + 2][j - 1]
-    if i < 6 and j < 7:
+    if i < 6 and j < 7: 
         board_color[i + 2][j + 1] = board[i + 2][j + 1]
         
     if color == 'black':
@@ -208,8 +242,8 @@ def knight(i, j, board_color, board, color : str, black=None, white=None):
         white = board_color
         
 def calculate_coverage (board):
-    board2 = ['?' * 8 for _ in range(8)]
-    white = [list(row) for row in board2]
+    board2 = ['?' * 8 for _ in range(8)] # 8x8 board with all cells as '?'
+    white = [list(row) for row in board2] 
     black = [list(row) for row in board2]
     
     for i in range(8):
@@ -249,7 +283,7 @@ def calculate_coverage (board):
             if board[i][j] in WHITE_QUEEN:
                 queen(i, j, white, board, 'white', white=white)
 
-    white = [''.join(row) for row in white]
+    white = [''.join(row) for row in white] # convert list of lists to list of strings
     black = [''.join(row) for row in black]
     
     return white, black
