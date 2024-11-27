@@ -61,7 +61,7 @@ def black_pawn(i, j, black, board):
                 black[i + 1][j] = board[i + 1][j]
             black[i + 1][j - 1] = board[i + 1][j - 1]
 
-def king(i, j, board_color, board, color : str, black=None, white=None):
+def king(i, j, board_color, board, color : str, black=None, white=None): 
     """ 
     i+1 = down
     i-1 = up
@@ -246,8 +246,11 @@ def calculate_coverage (board):
     white = [list(row) for row in board2] 
     black = [list(row) for row in board2]
     
+    operations = 0
     for i in range(8):
         for j in range(8):
+            if board[i][j] == '.':
+                break
             if board[i][j] in BLACK_ROOK:
                 rook(i, j, black, board, 'black', black=black)
             if board[i][j] in BLACK_KNIGHT:
@@ -283,6 +286,7 @@ def calculate_coverage (board):
             if board[i][j] in WHITE_QUEEN:
                 queen(i, j, white, board, 'white', white=white)
 
+    print(f"Operations: {operations}")
     white = [''.join(row) for row in white] # convert list of lists to list of strings
     black = [''.join(row) for row in black]
     
@@ -339,15 +343,15 @@ def main():
     # ]
     
     white, black = calculate_coverage(chess_board)
-    print_normal_board(board=chess_board)
-    print_normal_board(white, color='White')
-    print_normal_board(black, color='Black')
+    # print_normal_board(board=chess_board)
+    # print_normal_board(white, color='White')
+    # print_normal_board(black, color='Black')
     
-    print("\n\n\n\n")
+    # print("\n\n\n\n")
     
-    print_prettified_board(board=chess_board)
-    print_prettified_board(white, color='White')
-    print_prettified_board(black, color='Black')
+    # print_prettified_board(board=chess_board)
+    # print_prettified_board(white, color='White')
+    # print_prettified_board(black, color='Black')
 
 if __name__ == "__main__":
     main()
